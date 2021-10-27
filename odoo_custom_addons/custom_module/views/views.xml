@@ -1,0 +1,88 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="custom_module.list">
+      <field name="name">medicine</field>
+      <field name="model">custom_module.custom_module</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="barcode" />
+          <field name="name" />
+          <field name="description" />
+          <field name="usage_type" />
+          <field name="sale_price" />
+          <field name="scientific_name" />
+          <field name="originator" />
+          <field name="quantity_available" />
+        </tree>
+      </field>
+    </record>
+
+    <!-- model.name form view -->
+    <record id="custom_module_form_view" model="ir.ui.view">
+      <field name="name">form</field>
+      <field name="model">custom_module.custom_module</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="barcode" />
+              <field name="name" />
+              <field name="quantity_available" />
+              <field name="description" />
+              <field name="usage_type" />
+              <field name="scientific_name" />
+              <field name="originator" />
+            </group>
+            <group>
+              <field name="moves">
+                <tree>
+                  <field name="timestamp" />
+                  <field name="name" />
+                  <field name="quantity" sum="Total" />
+                </tree>
+              </field>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- model.name graph view -->
+    <record id="custom_module_graph_view" model="ir.ui.view">
+      <field name="name">graph</field>
+      <field name="model">custom_module.custom_module</field>
+      <field name="arch" type="xml">
+        <graph string="Total Quantity">
+          <field name="name" />
+          <field name="quantity_available" type="measure" />
+        </graph>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="custom_module.action_window">
+      <field name="name">pharmacy modal</field>
+      <field name="res_model">custom_module.custom_module</field>
+      <field name="view_mode">tree,form,graph</field>
+    </record>
+
+
+    <!-- Top menu item -->
+
+    <menuitem name="custom_module" id="custom_module.menu_root" />
+
+    <!-- menu categories -->
+
+    <menuitem name="Medicines" id="custom_module.medicine" parent="custom_module.menu_root" />
+
+    <!-- actions -->
+
+    <menuitem name="Medicine" id="custom_module.menu_medicine_action" sequence="10" parent="custom_module.medicine" action="custom_module.action_window" />
+
+
+  </data>
+</odoo>
